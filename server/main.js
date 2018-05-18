@@ -3,7 +3,7 @@ const express = require('express')
 const compress = require('compression')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-
+const cors = require('cors')
 const controller = require('./controller')
 
 mongoose.Promise = global.Promise
@@ -11,6 +11,7 @@ mongoose.connect('mongodb://localhost/mini-project-lunch')
 
 const app = express()
 app.use(compress())
+app.use(cors())
 app.use(bodyParser.json())
 
 app.use('/api', controller)

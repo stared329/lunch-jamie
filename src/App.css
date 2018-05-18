@@ -2,3 +2,10 @@
   padding-top: 20px;
   text-align: center;
 }
+
+.vert-offset-top-0{
+    margin-top: 0em;
+}
+.vert-offset-top-2{
+    margin-top: 2em;
+}

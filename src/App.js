@@ -4,34 +4,63 @@ import { connect } from 'react-redux'
 
 import {
   fetchPeople,
-  getPeople
+  addPerson,
+  deletePerson,
+  groupingPeople
 } from './modules/lunch'
+
+import Lunch from './components/Lunch'
 
 import './App.css'
 
-const mapDispatchToProps = {
-  fetchPeople
-}
+const mapDispatchToProps = dispatch => (
+  {
+    onAdd(name) {
+      dispatch(addPerson(name))
+    },
+    onDelete(id) {
+      dispatch(deletePerson(id))
+    },
+    onGrouping(num) {
+      dispatch(groupingPeople(num))
+    },
+    onFetch() {
+      dispatch(fetchPeople())
+    }
+  }
+)
 
-const mapStateToProps = state => ({
-  people: getPeople(state)
-})
+const mapStateToProps = state => {
+  return {
+    people: state.lunch.people.people,
+    error: state.lunch.people.error,
+    isSaving: state.lunch.people.saving
+  }
+}
 
 class App extends React.Component {
   static propTypes = {
     people: PropTypes.array.isRequired
   }
 
+  componentDidMount() {
+    this.props.onFetch();
+  }
+
   render () {
     const {
-      people
+      people, error, onDelete, onAdd, onGrouping
     } = this.props
 
     return (
-      <div className='container'>
-        <h1>Lunch</h1>
-        {people}
-      </div>
+      <section className="container">
+        <Lunch people={people}
+        error={error} 
+        addPerson={onAdd}
+        deletePerson={onDelete}
+        groupingPeople={onGrouping}
+        grclass="col-xs-6 col-xs-offset-3" />
+      </section>
     )
   }
 }
